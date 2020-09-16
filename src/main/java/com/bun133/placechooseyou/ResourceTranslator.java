@@ -6,6 +6,8 @@ import org.bukkit.NamespacedKey;
 
 import java.io.*;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class ResourceTranslator {
     public JsonObject json;
     public ResourceTranslator(File file) throws FileNotFoundException {
@@ -13,7 +15,7 @@ public class ResourceTranslator {
     }
 
     public ResourceTranslator(InputStream stream){
-        json = new Gson().fromJson(new BufferedReader(new InputStreamReader(stream)),JsonObject.class);
+        json = new Gson().fromJson(new BufferedReader(new InputStreamReader(stream,UTF_8)),JsonObject.class);
     }
 
     public String get(String key){

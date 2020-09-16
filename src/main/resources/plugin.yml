@@ -19,6 +19,19 @@ commands:
     usage: /<command>
     permission-message: You don't have enough perm!
     permission: PlaceChooseYou.OP
+
+  setSafe:
+    description: SetSafe Block
+    usage: /<command>
+    permission-message: You don't have enough perm!
+    permission: PlaceChooseYou.OP
+
+  setTime:
+    description: Time set command
+    usage: /<commad>
+    permission-message: You don't have enough perm!
+    permission: PlaceChooseYou.OP
+
 permissions:
   PlaceChooseYou.OP:
     default: op
