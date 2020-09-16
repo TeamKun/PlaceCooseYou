@@ -1,0 +1,25 @@
+name: Placechooseyou
+version: ${project.version}
+main: com.bun133.placechooseyou.PluginMain
+api-version: 1.15
+authors: [Bun133]
+description: The place choose you.
+website: https://twitter.com/bun133_
+commands:
+  game:
+    description: Game Start/Stpo Command
+    usage: /<command> <start/stop>
+    permission-message: You don't have enough perm!
+    permission: PlaceChooseYou.OP
+  s:
+    description: Status Command of game
+    usage: /<command>
+  skip:
+    description: Skip this Round
+    usage: /<command>
+    permission-message: You don't have enough perm!
+    permission: PlaceChooseYou.OP
+permissions:
+  PlaceChooseYou.OP:
+    default: op
+    description: OP of this plugin
