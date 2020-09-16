@@ -96,10 +96,10 @@ public class PlaceChooser extends BukkitRunnable {
                 .forEach((it) -> {
                     if (it.v.getType().equals(safe)) {
                         it.t.sendMessage(ChatColor.BLUE + "SUCCESS");
-                        it.t.playSound(it.t.getLocation(), Sound.BLOCK_ANVIL_PLACE,1.0f,0.0f);
+                        it.t.playSound(it.t.getLocation(), Sound.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS, .0f,0.0f);
                     } else {
                         it.t.sendMessage(ChatColor.RED + "FAILURE");
-                        it.t.playSound(it.t.getLocation(), Sound.BLOCK_ANVIL_PLACE,1.0f,-10.0f);
+                        it.t.playSound(it.t.getLocation(), Sound.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS, 1.0f,-10.0f);
                         it.t.damage(1000000000);
                     }
                     it.t.sendMessage("Your Below Block is "+it.v.getType().name());
