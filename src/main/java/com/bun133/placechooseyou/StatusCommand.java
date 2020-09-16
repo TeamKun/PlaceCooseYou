@@ -13,9 +13,8 @@ public class StatusCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        sender.sendMessage("SafeBlock:"+chooser.safe.name());
-        sender.sendMessage("Now Time is "+chooser.ticks/20);
-        sender.sendMessage("Actually tick is "+chooser.ticks);
+        sender.sendMessage("ここに立て: "+chooser.safe.name());
+        sender.sendMessage("残り時間: "+chooser.ticks/20 + "秒");
         return true;
     }
 }

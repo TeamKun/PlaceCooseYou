@@ -50,6 +50,17 @@ public class PlaceChooser extends BukkitRunnable {
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(data));
     }
 
+    public static void broadCastOverlayTitle(String title, String subtitle, int in, int duration, int out) {
+        Bukkit.getOnlinePlayers()
+                .forEach((it) -> {
+                    sendOverlayTitle(it, title, subtitle, in, duration, out);
+                });
+    }
+
+    public static void sendOverlayTitle(Player p, String title, String subtitle, int in, int duration, int out) {
+        p.sendTitle(title, subtitle, in, duration, out);
+    }
+
     public static void broadCastTitle(String s) {
         Bukkit.getOnlinePlayers()
                 .forEach((it) -> {
@@ -64,6 +75,8 @@ public class PlaceChooser extends BukkitRunnable {
 
     public void setStatus(boolean b) {
         if (b) {
+            broadCastOverlayTitle("スタート", "次のブロックは " + translator.get(safe.getKey()) + "です", 20, 100, 20);
+            Bukkit.getOnlinePlayers().stream().forEach(it -> it.playSound(it.getLocation(), Sound.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS, .0f,0.0f));
             isStarting = true;
         } else {
             isStarting = false;
@@ -77,11 +90,15 @@ public class PlaceChooser extends BukkitRunnable {
         ++ticks;
         if (ticks >= changeTick) {
             checkSafe();
-            changeSafe();
-            ticks-=changeTick;
+            setStatus(false);
+            //changeSafe();
+            //ticks-=changeTick;
         }
 
-        broadCastTitle("" + ChatColor.BOLD + translator.get(safe.getKey()) + " " +((changeTick - ticks) / 20));
+        long totalSec = (changeTick - ticks) / 20;
+        long sec = totalSec % 60;
+        long min = totalSec / 60;
+        broadCastTitle("" + ChatColor.BOLD + translator.get(safe.getKey()) + " " +min + "分" + sec + "秒");
     }
 
     private boolean countNear() {
@@ -91,18 +108,19 @@ public class PlaceChooser extends BukkitRunnable {
     private void checkSafe() {
         Bukkit.getOnlinePlayers().stream()
                 .filter(Objects::nonNull)
+                .filter(e -> e.getGameMode() == GameMode.SURVIVAL || e.getGameMode() == GameMode.ADVENTURE)
                 .map((it) -> new DataSet<Player, Block>(it, getBelowBlock(it)))
                 .filter((it) -> it.v != null)
                 .forEach((it) -> {
                     if (it.v.getType().equals(safe)) {
-                        it.t.sendMessage(ChatColor.BLUE + "SUCCESS");
+                        sendOverlayTitle(it.t, ChatColor.BLUE + "クリア", "あなたの下のブロックは "+translator.get(it.v.getType().getKey())+" でした", 20, 100, 20);
                         it.t.playSound(it.t.getLocation(), Sound.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS, .0f,0.0f);
                     } else {
-                        it.t.sendMessage(ChatColor.RED + "FAILURE");
+                        sendOverlayTitle(it.t, ChatColor.RED + "ゲームオーバー", "あなたの下のブロックは "+translator.get(it.v.getType().getKey())+" でした", 20, 100, 20);
                         it.t.playSound(it.t.getLocation(), Sound.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS, 1.0f,-10.0f);
                         it.t.damage(1000000000);
+                        it.t.setGameMode(GameMode.SPECTATOR);
                     }
-                    it.t.sendMessage("Your Below Block is "+it.v.getType().name());
                 });
     }
 
@@ -122,7 +140,6 @@ public class PlaceChooser extends BukkitRunnable {
 
     public void changeSafe() {
         safe = safeSet.get(new Random().nextInt(safeSet.size() - 1));
-        Bukkit.broadcastMessage("Next Up is:" + safe.name());
     }
 
     public void setMin(Long min){

@@ -23,7 +23,7 @@ public class SkipCommand implements CommandExecutor {
 
     private boolean skip() {
         chooser.ticks=chooser.changeTick;
-        Bukkit.broadcastMessage("Skipped!");
+        Bukkit.broadcastMessage("強制終了!");
         return true;
     }
 }
