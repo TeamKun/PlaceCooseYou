@@ -102,7 +102,7 @@ public class PlaceChooser extends BukkitRunnable {
                         it.t.playSound(it.t.getLocation(), Sound.BLOCK_ANVIL_PLACE,1.0f,-10.0f);
                         it.t.damage(1000000000);
                     }
-                    it.t.sendMessage("Your Below Block is "+it.v.getType().name());
+                    it.t.sendMessage("Your Below Block is "+translator.get(it.v.getType().getKey()));
                 });
     }
 
@@ -122,7 +122,7 @@ public class PlaceChooser extends BukkitRunnable {
 
     public void changeSafe() {
         safe = safeSet.get(new Random().nextInt(safeSet.size() - 1));
-        Bukkit.broadcastMessage("Next Up is:" + safe.name());
+        Bukkit.broadcastMessage("Next Up is:" + translator.get(safe.getKey()));
     }
 
     public void setMin(Long min){
