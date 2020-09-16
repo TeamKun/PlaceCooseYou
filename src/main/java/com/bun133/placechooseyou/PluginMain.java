@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 
 public class PluginMain extends JavaPlugin {
     public PlaceChooser chooser;
+    public setBlockCommand setBlock;
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -18,8 +19,10 @@ public class PluginMain extends JavaPlugin {
         getCommand("game").setExecutor(new PlaceCommand(chooser));
         getCommand("s").setExecutor(new StatusCommand(chooser));
         getCommand("skip").setExecutor(new SkipCommand(chooser));
-        getCommand("setSafe").setExecutor(new setBlockCommand(chooser));
+        this.setBlock = new setBlockCommand(chooser);
+        getCommand("setSafe").setExecutor(setBlock);
         getCommand("setTime").setExecutor(new setTimeCommand(chooser));
+        Bukkit.getServer().getPluginManager().registerEvents(setBlock,this);
     }
 
     @Override
