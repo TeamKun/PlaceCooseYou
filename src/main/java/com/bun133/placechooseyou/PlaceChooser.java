@@ -81,7 +81,7 @@ public class PlaceChooser extends BukkitRunnable {
             ticks-=changeTick;
         }
 
-        broadCastTitle("" + ChatColor.BOLD + safe.name() + " " +((changeTick - ticks) / 20));
+        broadCastTitle("" + ChatColor.BOLD + translator.get(safe.getKey()) + " " +((changeTick - ticks) / 20));
     }
 
     private boolean countNear() {
@@ -123,5 +123,13 @@ public class PlaceChooser extends BukkitRunnable {
     public void changeSafe() {
         safe = safeSet.get(new Random().nextInt(safeSet.size() - 1));
         Bukkit.broadcastMessage("Next Up is:" + safe.name());
+    }
+
+    public void setMin(Long min){
+        this.changeTick = 1200 *min;
+    }
+
+    public void setSec(Long min){
+        this.changeTick = 20 * min;
     }
 }

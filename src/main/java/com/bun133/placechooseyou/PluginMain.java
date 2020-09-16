@@ -18,6 +18,8 @@ public class PluginMain extends JavaPlugin {
         getCommand("game").setExecutor(new PlaceCommand(chooser));
         getCommand("s").setExecutor(new StatusCommand(chooser));
         getCommand("skip").setExecutor(new SkipCommand(chooser));
+        getCommand("setSafe").setExecutor(new setBlockCommand(chooser));
+        getCommand("setTime").setExecutor(new setTimeCommand(chooser));
     }
 
     @Override
